@@ -24,7 +24,8 @@ def compute_B(R):
 
     #########################################
     ## INSERT YOUR CODE HERE
-
+    B = (R != None)
+    B.astype(int)
     #########################################
     return B
 
@@ -51,14 +52,16 @@ def compute_L(R,U,V):
     ## INSERT YOUR CODE HERE
 
     # compute a binary matrix B
-
-
-
-
-
+    B = compute_B(R)
+    L = np.ndarray(shape=(np.size(R,0), np.size(R,1)) )
+     
     # compute the loss matrix L
-
-
+    for i in range(np.size(B,0)) :
+        for j in range(np.size(B,1)):
+            if (B[i][j] == 0):
+                L[i][j] = 0
+            else :
+                L[i][j] = R[i,j] - np.dot(U[i,:], V[:,j])
     #########################################
     return L
 
@@ -80,7 +83,7 @@ def compute_dU(L,U, V,mu=1.):
 
     #########################################
     ## INSERT YOUR CODE HERE
-
+    dU = np.dot(-2*L, (V.T)) + (2*(mu)*U)
 
 
     #########################################
@@ -104,7 +107,7 @@ def compute_dV(L,U, V, mu=1.):
 
     #########################################
     ## INSERT YOUR CODE HERE
-
+    dV = np.dot(-2*(U.T), (L)) + (2*(mu)*V)
 
 
     #########################################
@@ -128,7 +131,7 @@ def update_U(U, dU, beta=.001):
 
     #########################################
     ## INSERT YOUR CODE HERE
-
+    U_new = U - beta*dU
     #########################################
     return U_new
 
@@ -149,7 +152,7 @@ def update_V(V, dV, beta=.001):
 
     #########################################
     ## INSERT YOUR CODE HERE
-
+    V_new = V - beta*dV
     #########################################
     return V_new
 
@@ -182,26 +185,27 @@ def matrix_decoposition(R, k=5, max_steps=1000000, beta=.01, mu=.01):
         ## INSERT YOUR CODE HERE
 
         # compute L matrix
-
-
+        L = compute_L(R,U,V)
         # ------ (update U while fixing V) ------
         # compute gradient of U
-
+        dU = compute_dU(L,U, V, mu)
         # update U using gradient descent 
-
+        u_New = update_U(U, dU, beta=.01)
         # if U is not changed much in values, stop iteration
-
+        if (np.array_equal(dU,u_New)) :
+            return
 
 
 
 
         # ------ (update V while fixing U) ------
         # compute gradient of V 
-
+        dV = compute_dV(L,U, V, mu)
         # update V using gradient descent
-
+        v_New = update_V(V, dV, beta)
         # if V is not changed much in values, stop iteration
-
+        if (np.array_equal(dV, v_New)):
+            return
 
 
 
@@ -228,7 +232,7 @@ def predict(U, V, i, j):
     '''
     #########################################
     ## INSERT YOUR CODE HERE
-
+    p= (U[i].T + V[j])
     #########################################
     return p 
 
