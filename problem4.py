@@ -30,7 +30,9 @@ def pairwise_user_sim(R):
     '''
     #########################################
     ## INSERT YOUR CODE HERE
+
     S = pairwise_item_sim(R.T)
+    
     #########################################
     return S 
 
@@ -58,6 +60,7 @@ def predict(R, S, i, j):
     '''
     #########################################
     ## INSERT YOUR CODE HERE
+    
     p = p3.predict(R.T, S.T, j, i) 
 
     #########################################
