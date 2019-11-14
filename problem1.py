@@ -53,7 +53,9 @@ class CardsSuitCount(MRJob):
         '''
         #########################################
         ## INSERT YOUR CODE HERE
+
         yield in_value[0], 1
+        
         #########################################
 
 
@@ -72,6 +74,7 @@ class CardsSuitCount(MRJob):
         '''
         #########################################
         ## INSERT YOUR CODE HERE
+
         yield in_key, sum(in_values)
 
         #########################################
@@ -116,9 +119,11 @@ class CardsSuitSum(MRJob):
         '''
         #########################################
         ## INSERT YOUR CODE HERE
+
         key = in_value[0]
         value = int(in_value[1:len(in_value)])
         yield key, value
+
         #########################################
 
 
@@ -136,7 +141,9 @@ class CardsSuitSum(MRJob):
         '''
         #########################################
         ## INSERT YOUR CODE HERE
+
         yield in_key, sum(in_values)
+        
         #########################################
 
 
@@ -182,8 +189,10 @@ class CardsNumberCount(MRJob):
         '''
         #########################################
         ## INSERT YOUR CODE HERE
+
         key = in_value[1:len(in_value)]
         yield key, 1
+
         #########################################
 
 
@@ -201,7 +210,9 @@ class CardsNumberCount(MRJob):
         '''
         #########################################
         ## INSERT YOUR CODE HERE
+
         yield in_key, sum(in_values)
+        
         #########################################
 
 
