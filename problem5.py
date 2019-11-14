@@ -192,24 +192,20 @@ def matrix_decoposition(R, k=5, max_steps=1000000, beta=.01, mu=.01):
         # update U using gradient descent 
         u_New = update_U(U, dU, beta=.01)
         # if U is not changed much in values, stop iteration
-        if (np.array_equal(dU,u_New)) :
-            return
-
-
-
-
+        if (np.allclose(U, u_New)):
+             break
+        else:
+            U = u_New
         # ------ (update V while fixing U) ------
         # compute gradient of V 
         dV = compute_dV(L,U, V, mu)
         # update V using gradient descent
         v_New = update_V(V, dV, beta)
         # if V is not changed much in values, stop iteration
-        if (np.array_equal(dV, v_New)):
-            return
-
-
-
-
+        if (np.allclose(V, v_New)):
+            break
+        else:
+            V = v_New
         #########################################
     return U, V 
 
@@ -224,15 +220,17 @@ def predict(U, V, i, j):
         Input:
             U: the item (movie) factor matrix, a numpy float matrix of shape m X k. Here m is the number of movies (items).
             V: the user factor matrix, a numpy float matrix of shape k X n. Here n is the number of users. 
-            i: the index of the movie (item) to be predicted
+            i: the index of the movie (item) to be predicted 
             j: the index of the user to be predicted
         Output:
             p: the predicted rating of user j on movie i, a float scalar value between 1. and 5.
         Hint: this problem can be solved using one line of code.
     '''
     #########################################
-    ## INSERT YOUR CODE HERE
-    p= (U[i].T + V[j])
+    ## INSERT YOUR CODE HERE  
+    x = np.dot(U,V)
+    p = x[i][j]
+     
     #########################################
     return p 
 

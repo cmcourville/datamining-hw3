@@ -32,7 +32,7 @@ def cosine_similarity(X, Y):
     '''
     #########################################
     ## INSERT YOUR CODE HERE
-
+    S = (np.dot(X,Y)) / ((math.sqrt(sum(np.square(X)))) * (math.sqrt(sum(np.square(Y)))))
 
 
     #########################################
@@ -55,16 +55,7 @@ def pairwise_item_sim(R):
     '''
     #########################################
     ## INSERT YOUR CODE HERE
-
-
-
-
-
-
-
-
-
-
+    S= 0 
 
 
     #########################################
@@ -118,7 +109,7 @@ def predict(R,S,i,j):
     '''
     #########################################
     ## INSERT YOUR CODE HERE
-
+        
 
 
 

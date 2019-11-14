@@ -53,11 +53,7 @@ class CardsSuitCount(MRJob):
         '''
         #########################################
         ## INSERT YOUR CODE HERE
-        out = MRJob.mapper(in_key, in_value)
-        out_key = in_key
-        out_value = sum(in_value)
-
-        yield out_key, out_value
+        yield in_value[0], 1
         #########################################
 
 
@@ -76,8 +72,7 @@ class CardsSuitCount(MRJob):
         '''
         #########################################
         ## INSERT YOUR CODE HERE
-        mrjob.reducer(in_key, in_values)
-
+        yield in_key, sum(in_values)
 
         #########################################
 
@@ -121,7 +116,9 @@ class CardsSuitSum(MRJob):
         '''
         #########################################
         ## INSERT YOUR CODE HERE
-
+        key = in_value[0]
+        value = int(in_value[1:len(in_value)])
+        yield key, value
         #########################################
 
 
@@ -139,7 +136,7 @@ class CardsSuitSum(MRJob):
         '''
         #########################################
         ## INSERT YOUR CODE HERE
-
+        yield in_key, sum(in_values)
         #########################################
 
 
@@ -185,7 +182,8 @@ class CardsNumberCount(MRJob):
         '''
         #########################################
         ## INSERT YOUR CODE HERE
-
+        key = in_value[1:len(in_value)]
+        yield key, 1
         #########################################
 
 
@@ -203,7 +201,7 @@ class CardsNumberCount(MRJob):
         '''
         #########################################
         ## INSERT YOUR CODE HERE
-
+        yield in_key, sum(in_values)
         #########################################
 
 
