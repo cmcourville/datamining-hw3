@@ -33,8 +33,6 @@ def cosine_similarity(X, Y):
     #########################################
     ## INSERT YOUR CODE HERE
     S = (np.dot(X,Y)) / ((math.sqrt(sum(np.square(X)))) * (math.sqrt(sum(np.square(Y)))))
-
-
     #########################################
     return S 
 
@@ -55,8 +53,21 @@ def pairwise_item_sim(R):
     '''
     #########################################
     ## INSERT YOUR CODE HERE
-    S= 0 
+    m,n = R.shape
+    S = np.ones((m,m))
+    
+    for i in range(m):
+        for j in range(m):
+            if i > j:
+                a = (R[i,:] != None)
+                b = (R[j,:] != None)
+                rating = np.logical_and(a,b)
 
+                Ri = R[i,rating]
+                Rj = R[j,rating]
+          
+                S[i,j] = cosine_similarity(Ri,Rj)
+                S[j,i] = S[i,j]
 
     #########################################
     return S 
@@ -82,7 +93,7 @@ def weighted_average(X, W):
     '''
     #########################################
     ## INSERT YOUR CODE HERE
-
+    a = np.dot(X,W) / W.sum() 
     #########################################
     return a
 
@@ -109,12 +120,12 @@ def predict(R,S,i,j):
     '''
     #########################################
     ## INSERT YOUR CODE HERE
-        
+    rating = (R[ :, j] != None)  
 
+    Rj = R[rating, j] 
+    Si = S[i, rating] 
 
-
-
-
+    p = weighted_average(Rj, Si)
 
     #########################################
     return p 

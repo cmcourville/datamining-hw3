@@ -120,9 +120,9 @@ class CardsSuitSum(MRJob):
         #########################################
         ## INSERT YOUR CODE HERE
 
-        key = in_value[0]
-        value = int(in_value[1:len(in_value)])
-        yield key, value
+        out_key = in_value[0]
+        out_value = int(in_value[1:len(in_value)])
+        yield out_key, out_value
 
         #########################################
 
@@ -190,8 +190,8 @@ class CardsNumberCount(MRJob):
         #########################################
         ## INSERT YOUR CODE HERE
 
-        key = in_value[1:len(in_value)]
-        yield key, 1
+        out_key = in_value[1:len(in_value)]
+        yield out_key, 1
 
         #########################################
 
