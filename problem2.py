@@ -360,7 +360,6 @@ class MatMul_2by1(MRJob):
             ###logging.warning("in else")
             yield ('C', 1, b), ("B", a, b, c) 
             yield ('C', 2, b), ("B", a, b, c) 
-            
 
         #########################################
 
