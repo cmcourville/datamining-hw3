@@ -24,8 +24,10 @@ def compute_B(R):
 
     #########################################
     ## INSERT YOUR CODE HERE
+
     B = (R != None)
     B.astype(int)
+    
     #########################################
     return B
 
@@ -62,6 +64,7 @@ def compute_L(R,U,V):
                 L[i][j] = 0
             else :
                 L[i][j] = R[i,j] - np.dot(U[i,:], V[:,j])
+
     #########################################
     return L
 
@@ -83,8 +86,8 @@ def compute_dU(L,U, V,mu=1.):
 
     #########################################
     ## INSERT YOUR CODE HERE
-    dU = np.dot(-2*L, (V.T)) + (2*(mu)*U)
 
+    dU = np.dot(-2*L, (V.T)) + (2*(mu)*U)
 
     #########################################
     return dU 
@@ -107,8 +110,8 @@ def compute_dV(L,U, V, mu=1.):
 
     #########################################
     ## INSERT YOUR CODE HERE
-    dV = np.dot(-2*(U.T), (L)) + (2*(mu)*V)
 
+    dV = np.dot(-2*(U.T), (L)) + (2*(mu)*V)
 
     #########################################
     return dV 
@@ -131,7 +134,9 @@ def update_U(U, dU, beta=.001):
 
     #########################################
     ## INSERT YOUR CODE HERE
+
     U_new = U - beta*dU
+    
     #########################################
     return U_new
 
@@ -152,7 +157,9 @@ def update_V(V, dV, beta=.001):
 
     #########################################
     ## INSERT YOUR CODE HERE
+
     V_new = V - beta*dV
+    
     #########################################
     return V_new
 
@@ -206,6 +213,7 @@ def matrix_decoposition(R, k=5, max_steps=1000000, beta=.01, mu=.01):
             break
         else:
             V = v_New
+
         #########################################
     return U, V 
 
@@ -228,6 +236,7 @@ def predict(U, V, i, j):
     '''
     #########################################
     ## INSERT YOUR CODE HERE  
+    
     x = np.dot(U,V)
     p = x[i][j]
      
