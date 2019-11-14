@@ -100,6 +100,7 @@ class MatMul_1by1(MRJob):
         #########################################
         ## INSERT YOUR CODE HERE
         # process input value 
+
         matrix, firstRow, firstCol, elementVal, nrow, ncol = in_value.split(',')
         yield None, float(elementVal)
 
@@ -120,13 +121,11 @@ class MatMul_1by1(MRJob):
         '''
         #########################################
         ## INSERT YOUR CODE HERE
+
         outputVal = 1.
         for i in in_values:
             outputVal*=i
         yield ('C',1,1), outputVal
-
-
-
 
         #########################################
 
@@ -226,10 +225,10 @@ class MatMul_1by2(MRJob):
         #########################################
         ## INSERT YOUR CODE HERE
         # process input value 
+
         matrix, firstRow, firstCol, elementVal, nrow, ncol = in_value.split(',')
         a, b, c = int(firstRow), int(firstCol), float(elementVal)
         yield None, (matrix, a, b, c) 
-
 
         #########################################
 
@@ -259,11 +258,6 @@ class MatMul_1by2(MRJob):
                 matrixB[a-1] = c
 
         yield ('C',1,1), np.dot(matrixA, matrixB)
-
-
-
-
-
 
         #########################################
 
@@ -354,6 +348,7 @@ class MatMul_2by1(MRJob):
         #########################################
         ## INSERT YOUR CODE HERE
         # process input value 
+
         matrix, firstRow, firstCol, elementVal, nrow, ncol = in_value.split(',')
         a, b, c = int(firstRow), int(firstCol), float(elementVal)
         if matrix == "A":
@@ -362,12 +357,6 @@ class MatMul_2by1(MRJob):
         else:
             yield ('C', 1, b), ("B", a, b, c) 
             yield ('C', 2, b), ("B", a, b, c) 
-
-
-
-
-
-
 
         #########################################
 
@@ -386,6 +375,7 @@ class MatMul_2by1(MRJob):
         '''
         #########################################
         ## INSERT YOUR CODE HERE
+
         for i, a, b, c in in_values:
             if i == 'A':
                 matrixA = c
@@ -393,11 +383,6 @@ class MatMul_2by1(MRJob):
                 matrixB = c
 
         yield in_key, matrixA*matrixB
-
-
-
-
-
 
         #########################################
 
@@ -461,6 +446,7 @@ class MatMul_2by2(MRJob):
         
         #########################################
         ## INSERT YOUR CODE HERE
+
         matrix, firstRow, firstCol, elementVal, nrow, ncol = in_value.split(',')
         a, b, c = int(firstRow), int(firstCol), float(elementVal)
         if matrix == "A":
@@ -469,12 +455,6 @@ class MatMul_2by2(MRJob):
         else:
             yield ('C', 1, b), ("B", a, b, c) 
             yield ('C', 2, b), ("B", a, b, c) 
-
-
-
-
-
-
 
         #########################################
 
@@ -493,6 +473,7 @@ class MatMul_2by2(MRJob):
         '''
         #########################################
         ## INSERT YOUR CODE HERE
+
         matrixA =np.zeros(5)
         matrixB =np.zeros(5)
 
@@ -503,13 +484,6 @@ class MatMul_2by2(MRJob):
                 matrixB[a-1] = c
 
         yield in_key, np.dot(matrixA, matrixB)
-
-
-
-
-
-
-
 
         #########################################
 
@@ -550,14 +524,16 @@ class MatMul(MRJob):
         ## INSERT YOUR CODE HERE
         # process input value 
 
-
+        matrix, firstRow, firstCol, elementVal, nrow, ncol = in_value.split(',')
+        a, b, c, d, e = int(firstRow), int(firstCol), float(elementVal), int(nrow), int(ncol)
 
         # generate output key-value pairs 
-
-
-
-
-
+        if matrix == 'A':
+            for k in range(1, e+1):
+                yield ('C', a, k), ('A', a, b, c) 
+        else:
+            for k in range(1, d+1):
+                yield ('C', k, b), ('B', a, b, c) 
 
         #########################################
 
@@ -573,19 +549,23 @@ class MatMul(MRJob):
         '''
         #########################################
         ## INSERT YOUR CODE HERE
+        
+        in_values = list(in_values)
+        k = int(len(list(in_values))/ 2)
+        matrixA = k*[0.]
+        matrixB = k*[0.]
 
-
-
-
-
-
-
-
-
-
-
-
-
+        for i in in_values:
+            j, a, b, c = i
+            if j == 'A':
+                matrixA[b-1] = c
+            else:
+                matrixB[a-1] = c
+        
+        s = 0.
+        for x, y in zip(matrixA, matrixB):
+            s+= x*y
+        yield in_key, s 
 
         #########################################
 
